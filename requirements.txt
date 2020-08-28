@@ -1,0 +1,2 @@
+pymongo[srv]~=3.11
+python-dotenv~=0.14.0
