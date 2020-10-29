@@ -1,0 +1,8 @@
+# Replace the dummy URL below with your MongoDB cluster URL, and
+# rename this file to .env
+# (make sure it doesn't end up being called .env.txt by mistake!)
+# And DON'T COMMIT IT TO YOUR GIT REPOSITORY!!!
+#
+# Then when you run the scripts in the src directory, they pick up your
+# cluster configuration automatically.
+declare -x MONGODB_URI="mongodb+srv://username:password@cluster0-abcde.platform.mongodb.net/test?retryWrites=true&w=majority"
