@@ -37,23 +37,57 @@ db = client["sample_mflix"]
 movie_collection = db["movies"]
 
 
+def a_sample_movie_document():
+    """
+    Obtain a single movie document, and pretty-print it.
+    """
+    print_title("A Sample Movie")
+
+    pipeline = [
+        {
+            "$match": {
+                "title": "A Star Is Born"
+            }
+        }, 
+        { "$limit": 1 },
+    ]
+    results = movie_collection.aggregate(pipeline)
+    for movie in results:
+        pprint(movie)
+
+
+def a_sample_comment_document():
+    """
+    Obtain a single comment document, and pretty-print it.
+    """
+    print_title("A Sample Comment")
+
+    pipeline = [
+        { "$limit": 1 },
+    ]
+    results = db["comments"].aggregate(pipeline)
+    for movie in results:
+        pprint(movie)
+
+
 def a_star_is_born_all():
     """
     Print a summary of all documents for "A Star Is Born" in the collection.
     """
     print_title("A Star Is Born - All Documents")
 
-    # Execute a pipeline with the following stages:
+    # A pipeline with the following stages:
     #  * Match title = "A Star Is Born"
     #  * Sort by year, ascending
-    results = movie_collection.aggregate([
+    pipeline = [
         {
             "$match": {
                 "title": "A Star Is Born"
             }
         }, 
         { "$sort": { "year": pymongo.ASCENDING } },
-    ])
+    ]
+    results = movie_collection.aggregate(pipeline)
     for movie in results:
         print(" * {title}, {first_castmember}, {year}".format(
             title=movie["title"],
@@ -184,17 +218,19 @@ def movies_each_year():
             "movie_titles": { "$push": "$title" },
         }
     }
+
     # Match a year-summary document where the year  (stored as `_id`) is both:
     #  * numeric
     #  * less than 1920
     stage_match_years = {
         "$match": {
-            "_id": {
+            "year": {
                 "$type": "number",
                 "$lt": 1920,
             }
         }
     }
+    
     # Sort year-summary documents by '_id'
     # (which is the year the document summarizes):
     stage_sort_year_ascending = {
@@ -202,8 +238,8 @@ def movies_each_year():
     }
 
     pipeline = [
-        stage_group_year,
         stage_match_years,
+        stage_group_year,
         stage_sort_year_ascending,
     ]
     results = movie_collection.aggregate(pipeline)
@@ -221,6 +257,8 @@ def movies_each_year():
             print(" *", title)
 
 
+# a_sample_movie_document()
+# a_sample_comment_document()
 a_star_is_born_all()
 a_star_is_born_most_recent()
 movies_with_comments()
