@@ -17,7 +17,7 @@ Full instructions on how to set up your Python environment for this code can be 
 To install the dependencies, create a virtualenv using your favourite tool, such as [venv](https://docs.python.org/3/tutorial/venv.html) or [virtualenv](https://virtualenv.pypa.io/en/stable/), activate it, and then run:
 
 ```bash
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
 You will also want to set the environment variable `MONGODB_URI` to your MongoDB Atlas cluster, either on the command-line, or in a `.env` file.
