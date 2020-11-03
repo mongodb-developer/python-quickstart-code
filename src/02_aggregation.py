@@ -166,8 +166,8 @@ def movies_with_comments():
             }
         } 
     }
-    # Limit to the first 10 documents:
-    limit_10 = { "$limit": 10 }
+    # Limit to the first 5 documents:
+    limit_5 = { "$limit": 5 }
 
     # Optional limit to 1000 documents.
     # Run at the start of the pipeline, to speed things up during development:
@@ -181,7 +181,7 @@ def movies_with_comments():
         stage_lookup_comments,
         stage_add_comment_count,
         stage_match_with_comments,
-        limit_10,
+        limit_5,
     ]
     results = movie_collection.aggregate(pipeline)
     for movie in results:
