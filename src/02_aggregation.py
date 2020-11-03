@@ -179,14 +179,14 @@ def movies_with_comments():
         #
         # limit_1000,
         stage_lookup_comments,
-        # stage_add_comment_count,
-        # stage_match_with_comments,
+        stage_add_comment_count,
+        stage_match_with_comments,
         limit_10,
     ]
     results = movie_collection.aggregate(pipeline)
     for movie in results:
         print_title(movie["title"], "-")
-        # print("Comment count:", movie["comment_count"])
+        print("Comment count:", movie["comment_count"])
 
         # Loop through the first 5 comments and print the name and text:
         for comment in movie["related_comments"][:5]:
